@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+ 
+  winedataset-linear-regression:
+    container_name: winedataset-linear-regression
+    image: winedataset/mlflow/linreg:2.0
+    build: 
+      context: .
+    working_dir: /home/workdir/
+    entrypoint: /bin/bash
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./scripts:/home/workdir:cached
+    ports:
+      - 5000:5000
+    command: mlflow ui --mlflow-tracking-uri --port 5000 --host 0.0.0.0
+  
+networks: 
+  default:
+    external:
+      name: mlflow_network1
